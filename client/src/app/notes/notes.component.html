@@ -1,0 +1,40 @@
+
+
+      <select (change)="onChange($event)" class="position-absolute ml-3 float-left"> 
+       <option value="all" selected>All</option>
+       <option value="completed">Completed</option>
+       <option value="pending">Pending</option>
+     </select>
+
+<div class="container">
+    <form #myForm='ngForm'>
+    <div class="input-group mb-2 col-6 mx-auto mt-4">
+        <input type="text" class="form-control" placeholder="Enter Todo" name="todoText" #todoText="ngModel" [(ngModel)]="todoApp.todoText" required>
+        <div class="input-group-append">
+          <button [disabled]="todoText.invalid" class="btn btn-primary" (click)="addTodo(myForm)" type="button" id="button-addon2">Add</button>
+        </div>
+      </div>
+    </form>
+      <div *ngIf="todoText.invalid && (todoText.dirty || todoText.touched)" class="text-danger col-6 mx-auto">
+        <div *ngIf="todoText.errors.required">
+          Todo is required
+        </div>
+      </div>
+   
+      <div class="col-6 mx-auto" *ngFor="let note of todoArr">
+        <div class="alert alert-primary" role="alert" >
+            <div class="row">
+               <div class="col-6">
+                <label>{{note.text}}</label>
+               </div> 
+               <div class="col-6">
+                   <button *ngIf="note.status=='pending'" (click)="updateTodo(note)" class="btn btn-success mr-2">Mark Completed</button> 
+                   <button *ngIf="note.status=='completed'" class="btn btn-success disabled mr-2">Completed</button> 
+                   <button class="btn btn-danger" (click)="deleteTodo(note)">Delete</button>
+               </div>
+            </div>
+            
+        </div>
+      </div>
+
+</div>
